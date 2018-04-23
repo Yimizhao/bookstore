@@ -5,6 +5,8 @@ import com.zym.bookstore.web.CriteriaBook;
 import com.zym.bookstore.web.Page;
 
 public interface BookService {
-	Page<Book> getPage(CriteriaBook criteriaBook);
+	public Page<Book> getPage(CriteriaBook criteriaBook);
+	
+	public Book getBook(int bookId);
 
 }

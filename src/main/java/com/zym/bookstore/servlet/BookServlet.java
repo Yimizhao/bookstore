@@ -61,7 +61,7 @@ public class BookServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 		}
 		try {
-//			 minPrice = Float.parseFloat(minPriceStr);
+			// minPrice = Float.parseFloat(minPriceStr);
 			minPrice = Integer.parseInt(minPriceStr);
 		} catch (NumberFormatException e) {
 		}
@@ -79,6 +79,21 @@ public class BookServlet extends HttpServlet {
 
 		request.getRequestDispatcher("page/books.jsp").forward(request, response);
 
+	}
+
+	protected void getBookInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String bookId = request.getParameter("bookId");
+		int id;
+		try {
+			id = Integer.parseInt(bookId);
+		} catch (NumberFormatException e) {
+			throw new NumberFormatException("数值转换异常");
+		}
+		Book book = bookService.getBook(id);
+//		request.setAttribute("book", book);
+//		response.sendRedirect("page/book.jsp");
+		request.setAttribute("book", book);
+		request.getRequestDispatcher("page/book.jsp").forward(request, response);
 	}
 
 }

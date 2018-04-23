@@ -15,4 +15,11 @@ public class BookServiceImpl implements BookService {
 		return bookDAO.getPage(criteriaBook);
 	}
 
+	@Override
+	public Book getBook(int bookId) {
+		return bookDAO.getBook(bookId);
+	}
+
+
+
 }

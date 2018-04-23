@@ -22,7 +22,7 @@
 	<table cellspacing="10">
 		<c:forEach items="${bookPage.list }" var="book">
 			<tr>
-				<td><a href=""> ${book.title }</a> <br> ${book.author }</td>
+				<td><a href="<%=request.getContextPath()%>/bookServlet?method=getBookInfo&bookId=${book.id }"> ${book.title }</a> <br> ${book.author }</td>
 				<td>${book.price }</td>
 				<td><a href="">加入购物车</a></td>
 			</tr>
