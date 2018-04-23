@@ -27,7 +27,7 @@ public class Page<T> {
 		if (pageNo < 1)
 			pageNo = 1;
 
-		if (pageNo > getTotalPageNumber()) {
+		if (getTotalPageNumber() > 0 && pageNo > getTotalPageNumber()) {
 			pageNo = getTotalPageNumber();
 		}
 

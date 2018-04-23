@@ -3,7 +3,7 @@ package com.zym.bookstore.web;
 public class CriteriaBook {
 
 	private float minPrice = 0;
-	private float maxPrice = Integer.MAX_VALUE;
+	private float maxPrice = Float.MAX_VALUE;
 
 	private int pageNo;
 
