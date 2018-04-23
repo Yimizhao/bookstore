@@ -14,14 +14,14 @@ public class TestJDBCUtils {
 
 	}
 
-	@Test
-	public void testRelease() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRelea() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	public void testRelease() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testRelea() {
+//		fail("Not yet implemented");
+//	}
 
 }
