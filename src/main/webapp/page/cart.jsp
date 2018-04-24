@@ -21,6 +21,7 @@
 			<th>书名</th>
 			<th>数量</th>
 			<th>价格</th>
+			<th>&nbsp;</th>
 		</tr>
 		<c:if test="${!empty sessionScope.shoppingCart }">
 			<c:forEach items="${sessionScope.shoppingCart.books }" var="shoppingCartItemEntry">
@@ -32,7 +33,7 @@
 					<td><a href="">删除</a></td>
 				</tr>
 			</c:forEach>
-			<tr><td>总金额￥${sessionScope.shoppingCart.totalMoney }</td></tr>
+			<tr><td colspan="4">总金额￥${sessionScope.shoppingCart.totalMoney }</td></tr>
 		</c:if>
 	</table>
 	<a href="${pageContext.request.contextPath }/bookServlet?method=getBooks&pageNo=${param.pageNo }">继续购物</a>
