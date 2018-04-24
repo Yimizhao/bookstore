@@ -59,6 +59,7 @@ public class BookServlet extends HttpServlet {
 		try {
 			pageNo = Integer.parseInt(pageNoStr);
 		} catch (NumberFormatException e) {
+//			throw new NumberFormatException("数值转换异常");
 		}
 		try {
 			// minPrice = Float.parseFloat(minPriceStr);

@@ -26,7 +26,7 @@ public class TestBookDaoImpl {
 	public void testGetPageList() {
 		CriteriaBook criteriaBook = new CriteriaBook(0, 100, 8);
 
-		System.out.println(bookDaoImpl.getPageList(criteriaBook, 4));
+		System.out.println(bookDaoImpl.getBookList(criteriaBook, 4));
 	}
 
 	@Test

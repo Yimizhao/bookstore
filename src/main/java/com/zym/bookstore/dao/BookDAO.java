@@ -42,7 +42,7 @@ public interface BookDAO {
 	 * @param pageSize
 	 * @return
 	 */
-	public abstract List<Book> getPageList(CriteriaBook cb, int pageSize);
+	public abstract List<Book> getBookList(CriteriaBook cb, int pageSize);
 
 	/**
 	 * 返回指定 id 的 book 的 storeNumber 字段的值

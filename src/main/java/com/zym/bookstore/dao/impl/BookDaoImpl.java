@@ -23,7 +23,7 @@ public class BookDaoImpl extends BaseDAO<Book> implements BookDAO {
 		page.setTotalItemNumber(getTotalBookNumber(cb));
 		// 校验PageNo的合法性(位置很重要)
 		cb.setPageNo(page.getPageNo());
-		page.setList(getPageList(cb, page.getPageSize()));
+		page.setList(getBookList(cb, page.getPageSize()));
 		return page;
 	}
 
@@ -35,7 +35,7 @@ public class BookDaoImpl extends BaseDAO<Book> implements BookDAO {
 	}
 
 	@Override
-	public List<Book> getPageList(CriteriaBook cb, int pageSize) {
+	public List<Book> getBookList(CriteriaBook cb, int pageSize) {
 		String sql = "SELECT id,Author,title,Price,Publishingdate,Salesamount,Storenumber,Remark FROM mybooks WHERE Price >= ? AND Price <= ? limit ?,?";
 		return queryForList(sql, cb.getMinPrice(), cb.getMaxPrice(), (cb.getPageNo() - 1) * pageSize, pageSize);
 	}
