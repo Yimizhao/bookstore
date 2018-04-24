@@ -17,7 +17,7 @@
 		<br><br>
 	</c:if>
 	<c:if test="${!empty sessionScope.shoppingCart }">
-	您的购物车中有${sessionScope.shoppingCart.bookNumber }件商品,<a href="${pageContext.request.contextPath }/page/cart.jsp?pageNo=${bookPage.pageNo }">查看购物车</a>
+	您的购物车中有${sessionScope.shoppingCart.bookNumber }件商品,<a href="${pageContext.request.contextPath }/bookServlet?method=toCart&pageNo=${bookPage.pageNo }">查看购物车</a>
 		<br>
 		<br>
 	</c:if>

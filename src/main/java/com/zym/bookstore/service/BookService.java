@@ -12,4 +12,8 @@ public interface BookService {
 
 	public boolean addToCart(int bookId, ShoppingCart shoppingCart);
 
+	public void removeShoppingCartItemFromShoppingCart(ShoppingCart shoppingCart, int id);
+
+	public void clearShoppingCart(ShoppingCart shoppingCart);
+
 }

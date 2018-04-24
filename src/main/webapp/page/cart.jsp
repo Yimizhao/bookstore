@@ -5,7 +5,7 @@
 <html>
 <head>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath }/script/jquery-1.7.2.js"></script>
+	src="${pageContext.request.contextPath }/script/jquery-1.7.2.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/script/cart.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,14 +30,14 @@
 					<td><input type="text" name="quantity"
 						value="${shoppingCartItemEntry.value.quantity }" size="1"></td>
 					<td>${shoppingCartItemEntry.value.book.price }</td>
-					<td><a href="">删除</a></td>
+					<td><a class="delete" href="bookServlet?method=remove&pageNo=${param.pageNo }&bookId=${shoppingCartItemEntry.value.book.id }">删除</a></td>
 				</tr>
 			</c:forEach>
 			<tr><td colspan="4">总金额￥${sessionScope.shoppingCart.totalMoney }</td></tr>
 		</c:if>
 	</table>
 	<a href="${pageContext.request.contextPath }/bookServlet?method=getBooks&pageNo=${param.pageNo }">继续购物</a>
-	<a href="">清空购物车</a>
+	<a href="${pageContext.request.contextPath }/bookServlet?method=clear">清空购物车</a>
 	<a href="">结账</a>
 
 </body>

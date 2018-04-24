@@ -10,4 +10,17 @@ $(function() {
 			return false;
 		};
 	});
+
+	$(".delete").click(function() {
+
+		var $tr = $(this).parent().parent();
+		var title = $.trim($tr.find("td:first").text());
+		var flag = confirm("确定要删除" + title + "的信息吗?");
+
+		if (flag) {
+			return true;
+		}
+
+		return false;
+	});
 });

@@ -132,4 +132,35 @@ public class BookServlet extends HttpServlet {
 		this.getBooks(request, response);
 	}
 
+	protected void toCart(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("page/cart.jsp").forward(request, response);
+	}
+
+	protected void remove(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		String bookId = request.getParameter("bookId");
+		int id = -1;
+		try {
+			id = Integer.parseInt(bookId);
+		} catch (NumberFormatException e) {
+		}
+
+		if (id < 0) {
+			response.sendRedirect(request.getContextPath() + "/error/error_1.html");
+			return;
+		}
+		ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("shoppingCart");
+		bookService.removeShoppingCartItemFromShoppingCart(shoppingCart, id);
+
+		request.getRequestDispatcher("page/cart.jsp").forward(request, response);
+	}
+
+	protected void clear(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("shoppingCart");
+		bookService.clearShoppingCart(shoppingCart);
+		request.getRequestDispatcher("page/emptycart.jsp").forward(request, response);
+	}
+
 }
