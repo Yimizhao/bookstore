@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.zym.bookstore.domain.Book;
+import com.zym.bookstore.domain.ShoppingCart;
 import com.zym.bookstore.service.BookService;
 import com.zym.bookstore.service.impl.BookServiceImpl;
+import com.zym.bookstore.web.BookStoreWebUtils;
 import com.zym.bookstore.web.CriteriaBook;
 import com.zym.bookstore.web.Page;
 
@@ -59,7 +61,7 @@ public class BookServlet extends HttpServlet {
 		try {
 			pageNo = Integer.parseInt(pageNoStr);
 		} catch (NumberFormatException e) {
-//			throw new NumberFormatException("数值转换异常");
+			// throw new NumberFormatException("数值转换异常");
 		}
 		try {
 			// minPrice = Float.parseFloat(minPriceStr);
@@ -82,19 +84,52 @@ public class BookServlet extends HttpServlet {
 
 	}
 
-	protected void getBookInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void getBookInfo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String bookId = request.getParameter("bookId");
-		int id;
+		int id = -1;
+		Book book = null;
 		try {
 			id = Integer.parseInt(bookId);
 		} catch (NumberFormatException e) {
-			throw new NumberFormatException("数值转换异常");
 		}
-		Book book = bookService.getBook(id);
-//		request.setAttribute("book", book);
-//		response.sendRedirect("page/book.jsp");
+		if (id != -1) {
+			book = bookService.getBook(id);
+		}
+		if (book == null) {
+
+			response.sendRedirect(request.getContextPath() + "/error/error_1.html");
+			return;
+		}
 		request.setAttribute("book", book);
 		request.getRequestDispatcher("page/book.jsp").forward(request, response);
+	}
+
+	protected void addToCart(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		// 1、取得商品Id
+		String bookId = request.getParameter("bookId");
+		int id = -1;
+		boolean flag = Boolean.FALSE;
+		try {
+			id = Integer.parseInt(bookId);
+		} catch (NumberFormatException e) {
+		}
+
+		if (id > 0) {
+			// 2、取得购物车
+			ShoppingCart shoppingCart = BookStoreWebUtils.getShoppingCart(request);
+			// 3、添加到购物车
+			flag = bookService.addToCart(id, shoppingCart);
+		}
+
+		if (!flag) {
+			response.sendRedirect(request.getContextPath() + "/error/error_1.html");
+			return;
+		}
+
+		// 4、返回books页面
+		this.getBooks(request, response);
 	}
 
 }

@@ -5,31 +5,46 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>查看图书详细信息</title>
+<title>查看图书信息</title>
 </head>
 <body>
 
-	<input type="hidden" name="minPrice" value="${param.minPrice }" > 
-	<input type="hidden" name="maxPrice" value="${param.maxPrice }" > 
-	<h4>查看图书详细信息</h4>
+	<input type="hidden" name="minPrice" value="${param.minPrice }">
+	<input type="hidden" name="maxPrice" value="${param.maxPrice }">
+	<h4>查看图书信息</h4>
+	<c:if test="${!empty param.title }">
+		您已经将${param.title }加入到购物车中
+		<br><br>
+	</c:if>
+	<c:if test="${!empty sessionScope.shoppingCart }">
+	您的购物车中有${sessionScope.shoppingCart.bookNumber }件商品,<a href="${pageContext.request.contextPath }/page/cart.jsp?pageNo=${bookPage.pageNo }">查看购物车</a>
+		<br>
+		<br>
+	</c:if>
 	<form
 		action="<%=request.getContextPath()%>/bookServlet?method=getBooks"
 		method="post">
-		Price:<input type="text" name="minPrice" size="1" value="${sessionScope.minPrice }"> - <input type="text" name="maxPrice" value="${sessionScope.maxPrice }" size="1"> <br> 
+		Price:<input type="text" name="minPrice" size="1"
+			value="${sessionScope.minPrice }"> - <input type="text"
+			name="maxPrice" value="${sessionScope.maxPrice }" size="1"> <br>
 		<input type="submit" value="Submit">
 	</form>
 	<br>
 	<table cellspacing="10">
 		<c:forEach items="${bookPage.list }" var="book">
 			<tr>
-				<td><a href="<%=request.getContextPath()%>/bookServlet?method=getBookInfo&bookId=${book.id }&pageNo=${bookPage.pageNo }"> ${book.title }</a> <br> ${book.author }</td>
+				<td><a
+					href="<%=request.getContextPath()%>/bookServlet?method=getBookInfo&bookId=${book.id }&pageNo=${bookPage.pageNo }">
+						${book.title }</a> <br> ${book.author }</td>
 				<td>${book.price }</td>
-				<td><a href="">加入购物车</a></td>
+				<td><a
+					href="<%=request.getContextPath()%>/bookServlet?method=addToCart&pageNo=${bookPage.pageNo }&bookId=${book.id }&title=${book.title }">加入购物车</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 
-	<input type="hidden" id="totalPageNumber" value="${bookPage.totalPageNumber }" > 
+	<input type="hidden" id="totalPageNumber"
+		value="${bookPage.totalPageNumber }">
 	<br> 共${bookPage.totalPageNumber }页 当前第${bookPage.pageNo }页
 	<c:if test="${bookPage.hasPrev }">
 		<a
@@ -43,7 +58,8 @@
 		<a
 			href="<%=request.getContextPath()%>/bookServlet?method=getBooks&pageNo=${bookPage.totalPageNumber}">尾页</a>
 	</c:if>
-	转到<input type="text" id="pageNo" size="1">页
+	转到
+	<input type="text" id="pageNo" size="1">页
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/script/jquery-1.7.2.js"></script>
 	<script type="text/javascript"
