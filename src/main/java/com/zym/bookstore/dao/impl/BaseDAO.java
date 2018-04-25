@@ -15,6 +15,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import com.zym.bookstore.dao.DAO;
 import com.zym.bookstore.db.JDBCUtils;
 import com.zym.bookstore.utils.ReflectionUtils;
+import com.zym.bookstore.web.ConnectionContext;
 
 /*
  * 操作表具体通用的实现类
@@ -35,13 +36,11 @@ public class BaseDAO<T> implements DAO<T> {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		try {
-			connection = JDBCUtils.getConnection();
+			connection = ConnectionContext.getInstance().get();
 			return queryRunner.query(connection, sql, args, new BeanListHandler<>(clazz));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCUtils.release(connection);
 		}
 		return null;
 	}
@@ -52,13 +51,11 @@ public class BaseDAO<T> implements DAO<T> {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		try {
-			connection = JDBCUtils.getConnection();
+			connection = ConnectionContext.getInstance().get();
 			return queryRunner.query(connection, sql, args, new BeanHandler<>(clazz));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCUtils.release(connection);
 		}
 		return null;
 	}
@@ -67,13 +64,11 @@ public class BaseDAO<T> implements DAO<T> {
 	public void update(String sql, Object... args) {
 		Connection connection = null;
 		try {
-			connection = JDBCUtils.getConnection();
+			connection = ConnectionContext.getInstance().get();
 			queryRunner.update(connection, sql, args);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCUtils.release(connection);
 		}
 		// TODO Auto-generated method stub
 	}
@@ -86,7 +81,7 @@ public class BaseDAO<T> implements DAO<T> {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			connection = JDBCUtils.getConnection();
+			connection = ConnectionContext.getInstance().get();
 			preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			if (args != null) {
 				for (int i = 0; i < args.length; i++) {
@@ -103,7 +98,6 @@ public class BaseDAO<T> implements DAO<T> {
 			e.printStackTrace();
 		} finally {
 			JDBCUtils.relea(resultSet, preparedStatement);
-			JDBCUtils.release(connection);
 		}
 		return id;
 	}
@@ -113,13 +107,11 @@ public class BaseDAO<T> implements DAO<T> {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		try {
-			connection = JDBCUtils.getConnection();
+			connection = ConnectionContext.getInstance().get();
 			return queryRunner.query(connection, sql, new ScalarHandler<E>(), args);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCUtils.release(connection);
 		}
 		return null;
 	}
@@ -129,13 +121,11 @@ public class BaseDAO<T> implements DAO<T> {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		try {
-			connection = JDBCUtils.getConnection();
+			connection = ConnectionContext.getInstance().get();
 			queryRunner.batch(connection, sql, args);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCUtils.release(connection);
 		}
 	}
 }
