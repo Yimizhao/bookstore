@@ -36,12 +36,17 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void removeShoppingCartItemFromShoppingCart(ShoppingCart shoppingCart, int id) {
 		shoppingCart.removeItem(id);
-		
+
 	}
 
 	@Override
 	public void clearShoppingCart(ShoppingCart shoppingCart) {
 		shoppingCart.clear();
+	}
+
+	@Override
+	public void updateItemQuantity(ShoppingCart sc, int id, int quantity) {
+		sc.updateItemQuantity(id, quantity);
 	}
 
 }

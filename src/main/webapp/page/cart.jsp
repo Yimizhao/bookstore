@@ -8,14 +8,13 @@
 	src="${pageContext.request.contextPath }/script/jquery-1.7.2.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/script/cart.js"></script>
+<%@ include file="/commons/queryCondition.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>购物车信息</title>
 </head>
 <body>
-	<input type="hidden" name="minPrice" value="${param.minPrice }">
-	<input type="hidden" name="maxPrice" value="${param.maxPrice }">
 	<h4>购物车信息</h4>
-	您的购物车中有${sessionScope.shoppingCart.bookNumber }本书
+	<div id="bookNumber">您的购物车中有${sessionScope.shoppingCart.bookNumber }本书</div>
 	<table cellpadding="15">
 		<tr>
 			<th>书名</th>
@@ -24,19 +23,24 @@
 			<th>&nbsp;</th>
 		</tr>
 		<c:if test="${!empty sessionScope.shoppingCart }">
-			<c:forEach items="${sessionScope.shoppingCart.books }" var="shoppingCartItemEntry">
+			<c:forEach items="${sessionScope.shoppingCart.books }"
+				var="shoppingCartItemEntry">
 				<tr>
 					<td>${shoppingCartItemEntry.value.book.title }</td>
-					<td><input type="text" name="quantity"
+					<td><input type="text"
+						class="${shoppingCartItemEntry.value.quantity }" name="${shoppingCartItemEntry.value.book.id }"
 						value="${shoppingCartItemEntry.value.quantity }" size="1"></td>
 					<td>${shoppingCartItemEntry.value.book.price }</td>
-					<td><a class="delete" href="bookServlet?method=remove&pageNo=${param.pageNo }&bookId=${shoppingCartItemEntry.value.book.id }">删除</a></td>
+					<td><a href="bookServlet?method=remove&pageNo=${param.pageNo }&bookId=${shoppingCartItemEntry.value.book.id }" class="delete">删除</a></td>
 				</tr>
 			</c:forEach>
-			<tr><td colspan="4">总金额￥${sessionScope.shoppingCart.totalMoney }</td></tr>
+			<tr>
+				<td id="totalMoney" colspan="4">总金额￥${sessionScope.shoppingCart.totalMoney }</td>
+			</tr>
 		</c:if>
 	</table>
-	<a href="${pageContext.request.contextPath }/bookServlet?method=getBooks&pageNo=${param.pageNo }">继续购物</a>
+	<a
+		href="${pageContext.request.contextPath }/bookServlet?method=getBooks&pageNo=${param.pageNo }">继续购物</a>
 	<a href="${pageContext.request.contextPath }/bookServlet?method=clear">清空购物车</a>
 	<a href="">结账</a>
 

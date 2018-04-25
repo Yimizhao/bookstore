@@ -2,6 +2,8 @@ package com.zym.bookstore.servlet;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.zym.bookstore.domain.Book;
 import com.zym.bookstore.domain.ShoppingCart;
 import com.zym.bookstore.service.BookService;
@@ -150,7 +153,7 @@ public class BookServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/error/error_1.html");
 			return;
 		}
-		ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("shoppingCart");
+		ShoppingCart shoppingCart = BookStoreWebUtils.getShoppingCart(request);
 		bookService.removeShoppingCartItemFromShoppingCart(shoppingCart, id);
 
 		request.getRequestDispatcher("page/cart.jsp").forward(request, response);
@@ -158,9 +161,38 @@ public class BookServlet extends HttpServlet {
 
 	protected void clear(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("shoppingCart");
+		ShoppingCart shoppingCart = BookStoreWebUtils.getShoppingCart(request);
 		bookService.clearShoppingCart(shoppingCart);
 		request.getRequestDispatcher("page/emptycart.jsp").forward(request, response);
+	}
+	
+	protected void updateItemQuantity(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//4. 在 updateItemQuantity 方法中, 获取 quanity, id, 再获取购物车对象, 调用 service 的方法做修改
+		String idStr = request.getParameter("id");
+		String quantityStr = request.getParameter("quantity");
+		
+		ShoppingCart sc = BookStoreWebUtils.getShoppingCart(request);
+		
+		int id = -1;
+		int quantity = -1;
+		
+		try {
+			id = Integer.parseInt(idStr);
+			quantity = Integer.parseInt(quantityStr);
+		} catch (Exception e) {}
+		
+		if(id > 0 && quantity > 0)
+			bookService.updateItemQuantity(sc, id, quantity);
+		
+		//5. 传回 JSON 数据: bookNumber:xx, totalMoney
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("bookNumber", sc.getBookNumber());
+		result.put("totalMoney", sc.getTotalMoney());
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(result);
+		response.setContentType("text/javascript");
+		response.getWriter().print(jsonStr);
 	}
 
 }

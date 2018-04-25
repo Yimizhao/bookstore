@@ -16,4 +16,6 @@ public interface BookService {
 
 	public void clearShoppingCart(ShoppingCart shoppingCart);
 
+	public void updateItemQuantity(ShoppingCart sc, int id, int quantity);
+
 }
