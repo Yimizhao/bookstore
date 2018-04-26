@@ -18,4 +18,6 @@ public interface BookService {
 
 	public void updateItemQuantity(ShoppingCart sc, int id, int quantity);
 
+	public void cash(ShoppingCart shoppingCart, String username, String accountId);
+
 }

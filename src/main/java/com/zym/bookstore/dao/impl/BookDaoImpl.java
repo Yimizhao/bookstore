@@ -51,7 +51,7 @@ public class BookDaoImpl extends BaseDAO<Book> implements BookDAO {
 	public void batchUpdateStoreNumberAndSalesAmount(Collection<ShoppingCartItem> items) {
 		String sql = "UPDATE mybooks SET Salesamount = Salesamount + ? , Storenumber = Storenumber - ? WHERE Id = ?";
 		List<ShoppingCartItem> shoppingCartItems = new ArrayList<>(items);
-		Object[][] args = new String[items.size()][3];
+		Object[][] args = new Object[items.size()][3];
 		for (int i = 0; i < shoppingCartItems.size(); i++) {
 			args[i][0] = shoppingCartItems.get(i).getQuantity();
 			args[i][1] = shoppingCartItems.get(i).getQuantity();

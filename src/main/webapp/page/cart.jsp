@@ -45,7 +45,7 @@
 	<a
 		href="${pageContext.request.contextPath }/bookServlet?method=getBooks&pageNo=${param.pageNo }">继续购物</a>
 	<a href="${pageContext.request.contextPath }/bookServlet?method=clear">清空购物车</a>
-	<a href="">结账</a>
+	<a href="${pageContext.request.contextPath }/bookServlet?method=forwardPage&page=cash">结账</a>
 
 </body>
 </html>
