@@ -6,11 +6,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/script/jquery-1.7.2.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/script/book.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ include file="/commons/queryCondition.jsp" %>
 <title>查看图书详细信息</title>
 </head>
 <body>
-	<input type="hidden" name="minPrice" value="${param.minPrice }">
-	<input type="hidden" name="maxPrice" value="${param.maxPrice }">
 	<h4>查看图书详细信息</h4>
 	书名：${book.title }
 	<br>

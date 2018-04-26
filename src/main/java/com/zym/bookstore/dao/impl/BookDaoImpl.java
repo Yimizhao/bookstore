@@ -1,5 +1,6 @@
 package com.zym.bookstore.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -48,8 +49,15 @@ public class BookDaoImpl extends BaseDAO<Book> implements BookDAO {
 
 	@Override
 	public void batchUpdateStoreNumberAndSalesAmount(Collection<ShoppingCartItem> items) {
-		// TODO Auto-generated method stub
-
+		String sql = "UPDATE mybooks SET Salesamount = Salesamount + ? , Storenumber = Storenumber - ? WHERE Id = ?";
+		List<ShoppingCartItem> shoppingCartItems = new ArrayList<>(items);
+		Object[][] args = new String[items.size()][3];
+		for (int i = 0; i < shoppingCartItems.size(); i++) {
+			args[i][0] = shoppingCartItems.get(i).getQuantity();
+			args[i][1] = shoppingCartItems.get(i).getQuantity();
+			args[i][2] = shoppingCartItems.get(i).getBook().getId();
+		}
+		batch(sql, args);
 	}
 
 }

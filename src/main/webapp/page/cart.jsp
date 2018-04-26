@@ -6,9 +6,9 @@
 <head>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/script/jquery-1.7.2.min.js"></script>
+<%@ include file="/commons/queryCondition.jsp"%>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/script/cart.js"></script>
-<%@ include file="/commons/queryCondition.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>购物车信息</title>
 </head>
@@ -28,10 +28,13 @@
 				<tr>
 					<td>${shoppingCartItemEntry.value.book.title }</td>
 					<td><input type="text"
-						class="${shoppingCartItemEntry.value.quantity }" name="${shoppingCartItemEntry.value.book.id }"
+						class="${shoppingCartItemEntry.value.quantity }"
+						name="${shoppingCartItemEntry.value.book.id }"
 						value="${shoppingCartItemEntry.value.quantity }" size="1"></td>
 					<td>${shoppingCartItemEntry.value.book.price }</td>
-					<td><a href="bookServlet?method=remove&pageNo=${param.pageNo }&bookId=${shoppingCartItemEntry.value.book.id }" class="delete">删除</a></td>
+					<td><a
+						href="bookServlet?method=remove&pageNo=${param.pageNo }&bookId=${shoppingCartItemEntry.value.book.id }"
+						class="delete">删除</a></td>
 				</tr>
 			</c:forEach>
 			<tr>
