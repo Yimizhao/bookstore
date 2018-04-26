@@ -110,5 +110,7 @@ public class BookServiceImpl implements BookService {
 		}
 		// 更新交易项
 		tradeItemDAO.batchSave(items);
+		
+		this.clearShoppingCart(shoppingCart);
 	}
 }
